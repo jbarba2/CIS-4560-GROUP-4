@@ -1,0 +1,27 @@
+beeline
+
+use yourdatabase;
+
+DROP TABLE IF EXISTS ecommerce;
+
+CREATE EXTERNAL TABLE IF NOT EXISTS ecommerce(
+event_time STRING,
+event_type STRING
+product_id INT,
+category_id BIGINT,
+category_code STRING,
+brand STRING,
+price DECIMAL,
+user_id BIGINT,
+user_session STRING)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ','
+STORED AS TEXTFILE
+LOCATION '/user/USE OWN DATABASE/ecommerce'
+TBLPROPERTIES("skip.header.line.count"="1");
+
+SELECT product_id,category_code,brand,price,user_id FROM ecommerce LIMIT 10;
+
+SELECT COUNT(brand) FROM ecommerce WHERE brand='apple';
+
+SELECT SUM(price) FROM ecommerce WHERE user_id=563459593;
